@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { T } from '../design/tokens.js';
-import { ChunkyBtn, Pill, CardSticker, CardSwatch, FakeStatus } from '../design/atoms.jsx';
+import { ChunkyBtn, Pill, CardSwatch, FakeStatus } from '../design/atoms.jsx';
+import CardArt from '../design/CardArt.jsx';
 import { useAppState } from '../state/AppState.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import { formatMultiplier } from '../services/matcher.js';
@@ -44,15 +45,17 @@ export default function Cards() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
             {selected.map((c, i) => (
               <div key={c.id}>
-                <CardSticker
-                  brand={c.brand}
-                  name={c.name}
-                  last4={'••' + String(11 + i * 17).padStart(2, '0')}
-                  rotate={i % 2 === 0 ? -1.5 : 1.5}
-                  style={{ width: '100%', height: 160 }}
-                />
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8 }}>
-                  <div style={{ fontSize: 12, color: T.dim }}>{c.fee}</div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <CardArt
+                    id={c.id}
+                    last4={String(1100 + i * 173).slice(-4)}
+                    width={320}
+                    rotate={i % 2 === 0 ? -1.5 : 1.5}
+                  />
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 14 }}>
+                  <div style={{ fontWeight: 800, fontSize: 14 }}>{c.name}</div>
+                  <div style={{ fontSize: 12, color: T.dim }}>· {c.fee}</div>
                   <div style={{ flex: 1 }} />
                   <button
                     onClick={() => toggleCard(c.id)}

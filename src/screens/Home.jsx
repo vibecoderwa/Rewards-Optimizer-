@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { T } from '../design/tokens.js';
-import { ChunkyBtn, CardSticker, CardSwatch, Pill, FakeStatus } from '../design/atoms.jsx';
+import { ChunkyBtn, CardSwatch, Pill, FakeStatus } from '../design/atoms.jsx';
+import CardArt from '../design/CardArt.jsx';
 import BottomNav from '../components/BottomNav.jsx';
 import VariantToggle from '../components/VariantToggle.jsx';
 import { useAppState } from '../state/AppState.jsx';
@@ -199,7 +200,7 @@ function GeoBanner({ place, basket }) {
           <div style={{ padding: '28px 24px 0' }}>
             <div style={{ fontSize: 13, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 1, color: T.dim }}>Swipe this one</div>
             <div style={{ margin: '14px 0 0', position: 'relative', display: 'inline-block' }}>
-              <CardSticker brand={best.card.brand} name={best.card.name} last4="••04" rotate={-3} />
+              <CardArt id={best.card.id} last4="0421" width={300} rotate={-3} />
               <div style={{
                 position: 'absolute', top: -12, right: -16,
                 width: 64, height: 64, borderRadius: '50%', background: T.lemon,

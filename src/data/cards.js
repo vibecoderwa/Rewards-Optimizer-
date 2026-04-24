@@ -94,10 +94,9 @@ export const CARDS = [
     color: '#111111',
     rules: [
       // Cardholder picks ONE bonus category at 3× — dining OR groceries.
-      // We list both at 3× so the matcher always shows the best option for the place;
-      // edit one of these down to 1× to reflect your actual selection.
-      { category: 'dining',    multiplier: 3, unit: 'pts', cap: null,  notes: '3× points on dining (your choice — dining OR groceries)' },
-      { category: 'groceries', multiplier: 3, unit: 'pts', cap: 25000, notes: '3× points on groceries up to $25k/yr (your choice — dining OR groceries)' },
+      // Owner selected DINING.
+      { category: 'dining',    multiplier: 3, unit: 'pts', cap: null,  notes: '3× points on dining (selected bonus category)' },
+      { category: 'groceries', multiplier: 1, unit: 'pts', cap: null,  notes: '1× — bonus category was set to dining instead' },
       { category: 'travel',    multiplier: 2, unit: 'pts', cap: null,  notes: '2× points on travel' },
       { category: 'default',   multiplier: 1, unit: 'pts', cap: null,  notes: '1× point on everyday spend' },
     ],

@@ -49,18 +49,21 @@ const PRESETS = {
   },
 };
 
+const EXTS = ['png', 'jpg', 'jpeg', 'webp'];
+
 export default function CardArt({ id, last4 = '0421', width = 320, rotate = 0, style = {} }) {
-  const [imgFailed, setImgFailed] = useState(false);
+  const [extIdx, setExtIdx] = useState(0);
   const preset = PRESETS[id] || PRESETS['amex-gold'];
   const height = Math.round(width * 0.62); // close to ISO/IEC 7810 ID-1 ratio
 
-  // Try real artwork from /cards/<id>.png first.
-  if (!imgFailed) {
+  // Try real artwork from /cards/<id>.<ext>, falling back across extensions
+  // before giving up and rendering the SVG.
+  if (extIdx < EXTS.length) {
     return (
       <img
-        src={`/cards/${id}.png`}
+        src={`/cards/${id}.${EXTS[extIdx]}`}
         alt={preset.tier}
-        onError={() => setImgFailed(true)}
+        onError={() => setExtIdx((i) => i + 1)}
         style={{
           width, height, borderRadius: 14, display: 'block',
           boxShadow: `0 1px 2px rgba(0,0,0,0.15), 3px 5px 0 0 ${T.ink}`,

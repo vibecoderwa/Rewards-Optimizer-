@@ -1,16 +1,19 @@
 # Real card art (optional)
 
-Drop a PNG named after each card's `id` in this folder and the app will
+Drop an image named after each card's `id` in this folder and the app will
 use it instead of the stylized SVG fallback.
 
 ## Filenames
 
-- `amex-gold.png`
-- `amex-plat.png`
-- `chase-csp.png`        ← Sapphire Preferred
-- `venture-x.png`        ← Capital One Venture X
-- `savor.png`            ← Capital One Savor
-- `bilt-obsidian.png`    ← Bilt Obsidian
+The app tries `.png`, `.jpg`, `.jpeg`, then `.webp` (in that order) and
+uses the first one it finds:
+
+- `amex-gold.{png|jpg|jpeg|webp}`
+- `amex-plat.{png|jpg|jpeg|webp}`
+- `chase-csp.{png|jpg|jpeg|webp}`        ← Sapphire Preferred
+- `venture-x.{png|jpg|jpeg|webp}`        ← Capital One Venture X
+- `savor.{png|jpg|jpeg|webp}`            ← Capital One Savor
+- `bilt-obsidian.{png|jpg|jpeg|webp}`    ← Bilt Obsidian
 
 (IDs come from `src/data/cards.js` — change them there if you rename.)
 

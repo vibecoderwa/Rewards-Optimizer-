@@ -47,6 +47,42 @@ const PRESETS = {
     issuer: 'Bilt', tier: 'OBSIDIAN',
     network: 'mastercard', chipColor: '#D8C275',
   },
+  'chase-csr': {
+    bg: 'linear-gradient(135deg, #14304F 0%, #061626 100%)',
+    fg: '#fff', subtle: 'rgba(255,255,255,0.65)',
+    issuer: 'Chase', tier: 'SAPPHIRE RESERVE',
+    network: 'visa', chipColor: '#D8C275',
+  },
+  'chase-freedom-unlimited': {
+    bg: 'linear-gradient(135deg, #2D86C7 0%, #14507A 100%)',
+    fg: '#fff', subtle: 'rgba(255,255,255,0.7)',
+    issuer: 'Chase', tier: 'FREEDOM UNLIMITED',
+    network: 'visa', chipColor: '#D8C275',
+  },
+  'citi-double-cash': {
+    bg: 'linear-gradient(135deg, #2A2A2A 0%, #060606 100%)',
+    fg: '#fff', subtle: 'rgba(255,255,255,0.6)',
+    issuer: 'Citi', tier: 'DOUBLE CASH',
+    network: 'mastercard', chipColor: '#D8C275',
+  },
+  'wells-fargo-active-cash': {
+    bg: 'linear-gradient(135deg, #C82230 0%, #6E0E18 100%)',
+    fg: '#fff', subtle: 'rgba(255,255,255,0.7)',
+    issuer: 'Wells Fargo', tier: 'ACTIVE CASH',
+    network: 'visa', chipColor: '#D8C275',
+  },
+  'amex-bcp': {
+    bg: 'linear-gradient(135deg, #1860B8 0%, #0A3170 100%)',
+    fg: '#fff', subtle: 'rgba(255,255,255,0.7)',
+    issuer: 'American Express', tier: 'BLUE CASH PREFERRED',
+    network: 'amex', chipColor: '#E8C870',
+  },
+  'capital-one-quicksilver': {
+    bg: 'linear-gradient(135deg, #B8B8B8 0%, #6E6E6E 100%)',
+    fg: '#1a1a1a', subtle: 'rgba(26,26,26,0.6)',
+    issuer: 'Capital One', tier: 'QUICKSILVER',
+    network: 'mastercard', chipColor: '#D4D7DC',
+  },
 };
 
 const EXTS = ['png', 'jpg', 'jpeg', 'webp'];

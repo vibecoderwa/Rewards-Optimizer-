@@ -1,0 +1,14 @@
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Inter Tight", "Inter", -apple-system, system-ui, sans-serif;
+  color: #1A1814;
+  background: #F0EEE9;
+}
+.display { font-family: "Fraunces", "Times New Roman", Georgia, serif; font-weight: 800; letter-spacing: -0.02em; }
+.mono { font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace; }
+button { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }

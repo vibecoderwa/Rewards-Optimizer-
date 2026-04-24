@@ -1,0 +1,10 @@
+{
+  "name": "Swipewise",
+  "short_name": "Swipewise",
+  "description": "Your wallet, opinionated. Best card for every swipe.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F7F2E9",
+  "theme_color": "#D4B254"
+}

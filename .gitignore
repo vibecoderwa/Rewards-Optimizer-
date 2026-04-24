@@ -4,3 +4,13 @@ dist
 *.log
 .vite
 extracted-mocks/
+
+# iOS build artifacts (the Xcode project itself IS checked in; these aren't)
+ios/App/Pods/
+ios/App/build/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/

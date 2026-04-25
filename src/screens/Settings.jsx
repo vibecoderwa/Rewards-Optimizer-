@@ -13,6 +13,7 @@ export default function Settings() {
     phone, bankConnected, setBankConnected,
     selectedCardIds, setSelectedCardIds, setPhone, setOtp,
     autoPush, setAutoPush, usualBasket, setUsualBasket,
+    useGooglePlaces, setUseGooglePlaces,
   } = useAppState();
 
   const [status, setStatus] = useState('');
@@ -84,6 +85,13 @@ export default function Settings() {
           sub="Requires 'Always Allow' location + notifications"
           on={autoPush}
           onClick={toggleAutoPush}
+        />
+
+        <Toggle
+          label="Better place coverage (Google)"
+          sub="Uses Google Places — capped at the free tier (5k/mo)"
+          on={useGooglePlaces}
+          onClick={() => setUseGooglePlaces(!useGooglePlaces)}
         />
 
         <Row

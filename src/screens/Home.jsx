@@ -13,7 +13,7 @@ import { CATEGORY_LABELS } from '../data/categories.js';
 
 export default function Home() {
   const [variant, setVariant] = useState('A');
-  const { selectedCardIds, usualBasket } = useAppState();
+  const { selectedCardIds, usualBasket, useGooglePlaces } = useAppState();
   const [coords, setCoords]   = useState(null);
   const [places, setPlaces]   = useState(null);
   const [status, setStatus]   = useState('idle'); // idle | locating | loading | ready | error
@@ -28,7 +28,7 @@ export default function Home() {
       const pos = await getCurrentLocation();
       setCoords(pos);
       setStatus('loading');
-      const found = await fetchNearbyPlaces(pos, 500);
+      const found = await fetchNearbyPlaces(pos, 700, { useGoogle: useGooglePlaces });
       setPlaces(found);
       setStatus('ready');
       if (found[0]) setSelectedId(found[0].id);

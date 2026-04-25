@@ -1,15 +1,32 @@
-// Nearby places via OpenStreetMap's Overpass API. Free, no key.
-// We de-dupe by name+category so a chain with several OSM nodes collapses.
+// Nearby places — orchestrator. Default is OSM (Overpass, free).
+// If the user enables Google Places in Settings AND a key is configured,
+// we try Google first (richer coverage, especially for small/independent
+// businesses) and fall back to OSM on cap-hit, missing key, or error.
 
 import { buildOverpassQuery, tagsToCategory, CATEGORY_ICONS } from '../data/categories.js';
 import { distanceMeters } from './location.js';
+import { fetchNearbyPlacesGoogle, HAS_GOOGLE_KEY } from './googlePlaces.js';
 
 const OVERPASS_ENDPOINTS = [
   'https://overpass-api.de/api/interpreter',
   'https://overpass.kumi.systems/api/interpreter',
 ];
 
-export async function fetchNearbyPlaces({ lat, lon }, radius = 400) {
+export async function fetchNearbyPlaces({ lat, lon }, radius = 400, opts = {}) {
+  // Caller can opt in via opts.useGoogle; we silently ignore if no key.
+  if (opts.useGoogle && HAS_GOOGLE_KEY) {
+    try {
+      return await fetchNearbyPlacesGoogle({ lat, lon }, radius);
+    } catch (e) {
+      // GOOGLE_CAP_HIT, network failure, etc. — fall through to OSM so
+      // the user always sees something instead of a hard error.
+      console.warn('[places] Google fallback to OSM:', e.message);
+    }
+  }
+  return fetchNearbyPlacesOSM({ lat, lon }, radius);
+}
+
+async function fetchNearbyPlacesOSM({ lat, lon }, radius = 400) {
   const body = buildOverpassQuery(lat, lon, radius);
   let lastErr;
   for (const url of OVERPASS_ENDPOINTS) {

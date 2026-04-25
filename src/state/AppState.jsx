@@ -13,6 +13,7 @@ const DEFAULTS = {
   bankConnected: false,
   autoPush: false,
   usualBasket: 100,
+  useGooglePlaces: false,
 };
 
 async function loadPersisted() {
@@ -68,6 +69,7 @@ export function AppStateProvider({ children }) {
     setBankConnected: (v) => update({ bankConnected: v }),
     setAutoPush:      (v) => update({ autoPush: v }),
     setUsualBasket:   (v) => update({ usualBasket: v }),
+    setUseGooglePlaces: (v) => update({ useGooglePlaces: v }),
     toggleCard,
   }), [ready, state]);
 

@@ -1,41 +1,21 @@
-// Given a spend category and the user's wallet, find the best card.
-// "Best" = highest expected $ back per dollar spent (multiplier × point value).
+// Thin backwards-compat wrapper around the pure rewards engine.
+// New code should import directly from '../engine/rewards.js'.
 
-import { CARDS, POINT_VALUES } from '../data/cards.js';
+import { rankForCategory, formatMultiplier, formatMoney } from '../engine/rewards.js';
 
-// Return every rule that applies to a given category across the user's wallet,
-// sorted best-first. Items are { card, rule, effectivePct }.
+export { formatMultiplier, formatMoney };
+
 export function rankCardsForCategory(category, ownedIds) {
-  const rows = [];
-  for (const card of CARDS) {
-    if (!ownedIds.includes(card.id)) continue;
-    const rule = pickRule(card, category);
-    if (!rule) continue;
-    const pointValue = rule.unit === 'pct' ? 0.01 : (POINT_VALUES[card.id] ?? 0.01);
-    const effectivePct = rule.multiplier * pointValue;
-    rows.push({ card, rule, effectivePct });
-  }
-  return rows.sort((a, b) => b.effectivePct - a.effectivePct);
+  // Old shape was a flat array of { card, rule, effectivePct }.
+  return rankForCategory(category, ownedIds).ranked.map(({ card, rule, rate }) => ({
+    card, rule, effectivePct: rate,
+  }));
 }
 
-function pickRule(card, category) {
-  return card.rules.find((r) => r.category === category)
-      || card.rules.find((r) => r.category === 'default');
-}
-
-export function formatMultiplier(rule) {
-  if (rule.unit === 'pct') return `${rule.multiplier}%`;
-  return `${rule.multiplier}×`;
-}
-
-// "At your usual basket of $X, this card earns ~$Y"
 export function estimateReturn(rule, basket) {
+  if (!rule || !basket) return 0;
+  // Old behavior used a flat 0.02 cpp for points cards. Keeps parity for any
+  // call sites that haven't migrated to the engine's card-aware rate.
   const pv = rule.unit === 'pct' ? 0.01 : 0.02;
   return basket * rule.multiplier * pv;
-}
-
-export function formatMoney(n) {
-  if (n < 0.1) return `+$${n.toFixed(2)}`;
-  if (n < 10) return `+$${n.toFixed(2)}`;
-  return `+$${Math.round(n)}`;
 }

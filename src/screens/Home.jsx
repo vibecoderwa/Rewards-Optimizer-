@@ -9,6 +9,7 @@ import { useAppState } from '../state/AppState.jsx';
 import { getCurrentLocation, requestLocationPermission, formatDistance } from '../services/location.js';
 import { fetchNearbyPlaces } from '../services/places.js';
 import { rankCardsForCategory, formatMultiplier, estimateReturn, formatMoney } from '../services/matcher.js';
+import { rankForCategory, confidenceTier } from '../engine/rewards.js';
 import { CATEGORY_LABELS } from '../data/categories.js';
 
 export default function Home() {
@@ -46,7 +47,8 @@ export default function Home() {
     if (!places) return null;
     return places.map((p) => {
       const ranked = rankCardsForCategory(p.category, selectedCardIds);
-      return { ...p, ranked };
+      const { confidence } = rankForCategory(p.category, selectedCardIds);
+      return { ...p, ranked, confidence, confidenceTier: confidenceTier(confidence) };
     });
   }, [places, selectedCardIds]);
 
@@ -154,7 +156,10 @@ function GeoList({ places, selectedId, onSelect, onRefresh }) {
                       <CardSwatch brand={best.card.brand} size={22} />
                       <span style={{ fontSize: 12, fontWeight: 800 }}>{formatMultiplier(best.rule)}</span>
                     </div>
-                    <div style={{ fontSize: 10, color: T.dim, marginTop: 2 }}>{best.card.short}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'flex-end', marginTop: 2 }}>
+                      <ConfidenceDots tier={p.confidenceTier} />
+                      <div style={{ fontSize: 10, color: T.dim }}>{best.card.short}</div>
+                    </div>
                   </>
                 ) : (
                   <div style={{ fontSize: 10, color: T.dim }}>add cards</div>
@@ -248,6 +253,26 @@ function GeoBanner({ place, basket }) {
       )}
 
       <BottomNav active="home" />
+    </div>
+  );
+}
+
+// FR-HOME-07: confidence indicator. 3 dots, filled by tier.
+// 'tied' = 0 filled (recommendation is essentially a coin flip)
+// 'low'  = 1 filled
+// 'medium' = 2 filled
+// 'high' = 3 filled
+function ConfidenceDots({ tier }) {
+  const filled = { tied: 0, low: 1, medium: 2, high: 3 }[tier] ?? 3;
+  return (
+    <div style={{ display: 'flex', gap: 2 }} title={`Confidence: ${tier}`}>
+      {[0, 1, 2].map((i) => (
+        <div key={i} style={{
+          width: 5, height: 5, borderRadius: '50%',
+          background: i < filled ? T.ink : 'transparent',
+          border: `1px solid ${T.ink}`,
+        }} />
+      ))}
     </div>
   );
 }
